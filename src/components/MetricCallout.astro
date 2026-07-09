@@ -1,0 +1,49 @@
+---
+/**
+ * MetricCallout — a number that earns its size.
+ * Every metric can carry a footnote marker; honesty over impact.
+ */
+interface Props {
+  value: string;
+  caption: string;
+  footnote?: string; // e.g. "*" — rendered beside the value, explained nearby
+}
+
+const { value, caption, footnote } = Astro.props;
+---
+
+<div class="metric">
+  <div class="metric__value">
+    {value}{footnote && <sup class="metric__footnote">{footnote}</sup>}
+  </div>
+  <div class="metric__caption">{caption}</div>
+</div>
+
+<style>
+  .metric {
+    border-top: 2px solid var(--ink-800);
+    padding-top: var(--space-3);
+  }
+
+  .metric__value {
+    font-family: var(--font-mono);
+    font-size: clamp(1.7rem, 1.35rem + 1.6vw, 2.6rem);
+    font-weight: 600;
+    color: var(--ink-900);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .metric__footnote {
+    color: var(--accent-600);
+    font-size: 0.45em;
+    margin-left: 0.15em;
+  }
+
+  .metric__caption {
+    margin-top: var(--space-2);
+    font-size: var(--text-small);
+    color: var(--ink-500);
+    max-width: 22ch;
+  }
+</style>

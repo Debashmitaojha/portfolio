@@ -1,0 +1,152 @@
+/* ==========================================================================
+   DESIGN TOKENS — single source of truth. Change a value here, the whole
+   site follows.
+
+   Direction v2: "Torn & Told" — near-black grunge, bone-white speckled
+   paper, one dusty-pink wash, acid accents. Loud condensed display type,
+   serif-italic asides, mono annotations. Textured, personal, unmissable.
+   ========================================================================== */
+
+:root {
+  /* ---- Core surfaces ---------------------------------------------------- */
+  --void-0: #101013;   /* near-black base */
+  --void-1: #1a1a1f;   /* raised dark panels / cards on dark */
+  --void-2: #26262c;   /* dark hover fills, hairlines on dark */
+
+  --bone-0: #f4efe4;   /* bright bone paper */
+  --bone-1: #ece6d8;   /* recessed bone panels */
+  --bone-2: #ddd5c2;   /* deep bone, hairlines on light */
+
+  --pink-wash: #cf8fb4;  /* the one loud section wash */
+  --violet: #6a4de0;     /* electric moments (sparingly) */
+  --acid: #cde84a;       /* links & highlights on dark */
+  --blood: #c2401d;      /* small warm alerts on light */
+
+  /* ---- Default (light surface) palette — components read these ---------- */
+  --paper-0: #faf6ec;
+  --paper-1: var(--bone-0);
+  --paper-2: var(--bone-1);
+  --paper-3: var(--bone-2);
+
+  --ink-900: #121215;
+  --ink-800: #1b1b20;
+  --ink-600: #3a3a42;
+  --ink-500: #55555e;
+  --ink-400: #71717c;
+  --ink-200: #b9b9c2;
+
+  --accent-700: #96311a;
+  --accent-600: var(--blood);
+  --accent-500: #d94f24;
+  --accent-100: #f2dcd2;
+
+  --line-soft: var(--bone-2);
+  --shadow-paper: 0 1px 2px rgb(18 18 21 / 0.08), 0 4px 16px rgb(18 18 21 / 0.08);
+  --shadow-lift: 0 2px 4px rgb(18 18 21 / 0.1), 0 14px 34px rgb(18 18 21 / 0.16);
+
+  /* ---- Typography — four voices ----------------------------------------- */
+  /* Anton (the SHOUT: condensed caps display) · DM Serif Display italic
+     (the aside voice) · DM Sans (body) · DM Mono (annotations) */
+  --font-shout: 'Anton', 'Arial Narrow', sans-serif;
+  --font-serif: 'DM Serif Display', 'Georgia', serif;
+  --font-sans: 'DM Sans Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'DM Mono', 'Consolas', monospace;
+
+  --serif-weight: 400;
+
+  /* Fluid type scale (360px → 1440px) */
+  --text-shout: clamp(2.9rem, 1.2rem + 7.6vw, 6.8rem);     /* hero shouts */
+  --text-shout-2: clamp(2.1rem, 1.2rem + 4vw, 4.2rem);     /* section shouts */
+  --text-h1: clamp(2rem, 1.5rem + 2.4vw, 3.2rem);
+  --text-h2: clamp(1.55rem, 1.3rem + 1.2vw, 2.2rem);
+  --text-h3: clamp(1.26rem, 1.16rem + 0.45vw, 1.5rem);
+  --text-lead: clamp(1.12rem, 1.05rem + 0.3vw, 1.27rem);
+  --text-body: clamp(1rem, 0.97rem + 0.15vw, 1.08rem);
+  --text-small: 0.875rem;
+  --text-label: 0.8125rem;
+
+  --leading-shout: 0.96;
+  --leading-tight: 1.06;
+  --leading-snug: 1.25;
+  --leading-body: 1.65;
+
+  --tracking-shout: 0.01em;
+  --tracking-label: 0.09em;
+
+  /* ---- Spacing / layout / shape (unchanged rhythm) ----------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 7rem;
+
+  --container: 74rem;
+  --container-prose: 44rem;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+
+  --radius-1: 4px;
+  --radius-2: 14px;    /* softer cards, atul-style */
+  --radius-pill: 999px;
+
+  /* ---- Motion (rules unchanged: nothing loops, one long moment only) ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 160ms;
+  --dur-2: 300ms;
+  --dur-3: 650ms;
+  --dur-draw: 2400ms;
+}
+
+/* ==========================================================================
+   SURFFACE REMAPS — put a class on a section and every component inside
+   flips palette automatically. Components never know which world they're in.
+   ========================================================================== */
+
+.surface-void {
+  background-color: var(--void-0);
+  color: var(--bone-0);
+
+  --paper-0: var(--void-1);
+  --paper-1: var(--void-0);
+  --paper-2: var(--void-1);
+  --paper-3: var(--void-2);
+
+  --ink-900: #f7f3e8;
+  --ink-800: var(--bone-0);
+  --ink-600: #cfc9ba;
+  --ink-500: #a8a294;
+  --ink-400: #8b8577;
+  --ink-200: #4a4a52;
+
+  --accent-600: var(--acid);
+  --accent-500: var(--acid);
+  --accent-100: #3a3f19;
+
+  --line-soft: var(--void-2);
+  --shadow-paper: 0 1px 2px rgb(0 0 0 / 0.5), 0 6px 20px rgb(0 0 0 / 0.45);
+  --shadow-lift: 0 2px 6px rgb(0 0 0 / 0.5), 0 18px 44px rgb(0 0 0 / 0.55);
+}
+
+.surface-bone {
+  background-color: var(--bone-0);
+  color: var(--ink-800);
+}
+
+.surface-pink {
+  background-color: var(--pink-wash);
+  color: var(--ink-900);
+
+  --paper-0: #dca6c4;
+  --paper-1: var(--pink-wash);
+  --paper-2: #c684aa;
+  --paper-3: #b8759c;
+
+  --accent-600: #121215;
+  --accent-500: #121215;
+
+  --line-soft: #ba7ba0;
+}

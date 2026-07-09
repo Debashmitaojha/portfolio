@@ -1,0 +1,46 @@
+---
+/**
+ * TornEdge — the ripped-paper seam between two surfaces (the atul-style
+ * section transition). Sits at the TOP of the incoming section and tears
+ * into the section above it. `fill` must match the incoming section's
+ * background token.
+ */
+interface Props {
+  fill?: string; // CSS color/var of the section this edge belongs to
+  flip?: boolean; // point the tear downward instead
+}
+
+const { fill = 'var(--bone-0)', flip = false } = Astro.props;
+---
+
+<div class="torn" class:list={{ 'torn--flip': flip }} aria-hidden="true">
+  <svg viewBox="0 0 1440 64" preserveAspectRatio="none">
+    <path
+      fill={fill}
+      d="M0,44 L38,38 L74,50 L118,28 L166,42 L214,22 L262,46 L303,32 L352,52 L404,26 L449,40 L502,18 L548,44 L597,30 L642,50 L695,24 L742,42 L791,34 L838,52 L884,28 L933,44 L980,20 L1030,46 L1078,30 L1122,50 L1170,26 L1216,40 L1264,32 L1310,48 L1356,28 L1398,42 L1440,34 L1440,64 L0,64 Z"
+    ></path>
+  </svg>
+</div>
+
+<style>
+  .torn {
+    line-height: 0;
+    margin-top: -63px;
+    position: relative;
+    z-index: 3;
+    filter: drop-shadow(0 -3px 6px rgb(0 0 0 / 0.22));
+    pointer-events: none;
+  }
+
+  .torn svg {
+    width: 100%;
+    height: 64px;
+    display: block;
+  }
+
+  .torn--flip {
+    transform: scaleY(-1);
+    margin-top: 0;
+    margin-bottom: -63px;
+  }
+</style>

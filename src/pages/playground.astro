@@ -1,0 +1,107 @@
+---
+/**
+ * Playground — things I made. Driven by src/content/playground/: one .md
+ * per item; drop a new file, get a new card.
+ */
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+
+const items = (await getCollection('playground')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base
+  title={`Playground — ${site.name}`}
+  description="Experiments, crafts and side-quests — the margin notes of the portfolio."
+>
+  <div class="surface-bone textured"><div class="container pg">
+    <header class="pg__head">
+      <p class="label">Playground</p>
+      <h1 class="pg__title">The margins of the notebook.</h1>
+      <p class="lead pg__sub">
+        Off-hours making: calligraphy, small tools, visual experiments.
+        Less polished than the case studies — on purpose.
+      </p>
+    </header>
+
+    <div class="pg__grid">
+      {
+        items.map((item) => (
+          <article class="pg__card">
+            {item.data.image && (
+              <div class="pg__img">
+                <img src={item.data.image} alt={item.data.title} loading="lazy" />
+              </div>
+            )}
+            <h2 class="pg__card-title">{item.data.title}</h2>
+            <p class="pg__blurb">{item.data.blurb}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="label pg__note">
+      more entries land here over time — each one is a single markdown file
+    </p>
+  </div></div>
+</Base>
+
+<style>
+  .pg {
+    padding-block: var(--space-8);
+  }
+
+  .pg__title {
+    margin-top: var(--space-4);
+  }
+
+  .pg__sub {
+    margin-top: var(--space-4);
+    max-width: 48ch;
+  }
+
+  .pg__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-7);
+  }
+
+  .pg__card {
+    background: var(--paper-0);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-2);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-paper);
+    transition:
+      box-shadow var(--dur-2) var(--ease-out),
+      transform var(--dur-2) var(--ease-out);
+  }
+
+  .pg__card:hover {
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-3px) rotate(-0.4deg);
+  }
+
+  .pg__img {
+    background: var(--paper-1);
+    border-radius: var(--radius-1);
+    padding: var(--space-5);
+    margin-bottom: var(--space-5);
+  }
+
+  .pg__card-title {
+    font-size: var(--text-h3);
+  }
+
+  .pg__blurb {
+    margin-top: var(--space-3);
+    color: var(--ink-500);
+  }
+
+  .pg__note {
+    margin-top: var(--space-7);
+  }
+</style>

@@ -1,0 +1,357 @@
+---
+/**
+ * Case study page — executive summary first (the 30–60 second read),
+ * then meta, then the long-form body (Phase 3). The video/demo buttons
+ * appear only when the frontmatter sets them.
+ */
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Button from '../../components/Button.astro';
+import Chip from '../../components/Chip.astro';
+import MetaGrid from '../../components/MetaGrid.astro';
+import MetricCallout from '../../components/MetricCallout.astro';
+import MarginNote from '../../components/MarginNote.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('case-studies');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const heroIsVideo = d.heroMedia && /\.(mp4|webm)$/i.test(d.heroMedia);
+---
+
+<Base title={`${d.title} — Debashmita Ojha`} description={d.oneLiner}>
+  <div class="surface-bone textured"><article class="cs container">
+    <header class:list={['cs__head', { 'cs__head--with-media': d.heroMedia }]}>
+      <div class="cs__head-text">
+        <p class="label">{d.kicker}</p>
+        <h1 class="cs__title">{d.title}</h1>
+        <p class="lead cs__oneliner">{d.oneLiner}</p>
+        {d.why && <p class="aside cs__why">why it's on the rack — {d.why}</p>}
+
+        <div class="cs__actions">
+          {d.video && <Button variant="quiet" href={d.video}>▶ 1-min walkthrough</Button>}
+          {d.demo && <Button variant="ghost" href={d.demo}>Try the live demo</Button>}
+        </div>
+      </div>
+
+      {
+        d.heroMedia && (
+          <figure class="cs__media">
+            {heroIsVideo ? (
+              <video
+                src={d.heroMedia}
+                autoplay
+                muted
+                loop
+                playsinline
+                aria-label={d.heroMediaAlt ?? `${d.title} — screen recording`}
+              />
+            ) : (
+              <img src={d.heroMedia} alt={d.heroMediaAlt ?? `${d.title} — screens`} loading="eager" />
+            )}
+            <figcaption class="label">the real thing, running</figcaption>
+          </figure>
+        )
+      }
+
+      <div class="cs__meta">
+        <MetaGrid
+          items={[
+            { term: 'Role', detail: d.role },
+            { term: 'Timeline', detail: d.timeline },
+            { term: 'Method', detail: d.method },
+            { term: 'Output', detail: d.output },
+          ]}
+        />
+      </div>
+
+      {
+        d.tools.length > 0 && (
+          <div class="cs__tools">
+            {d.tools.map((t) => (
+              <Chip>{t}</Chip>
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    <!-- Executive summary: readable in under a minute -->
+    <section class="cs__exec">
+      <SectionHeading number="00" kicker="the one-minute read" title="Executive summary" />
+      <dl class="cs__exec-grid">
+        <div>
+          <dt class="label">Problem</dt>
+          <dd>{d.exec.problem}</dd>
+        </div>
+        <div>
+          <dt class="label">Approach</dt>
+          <dd>{d.exec.approach}</dd>
+        </div>
+        <div>
+          <dt class="label">Outcome</dt>
+          <dd>{d.exec.outcome}</dd>
+        </div>
+      </dl>
+
+      {
+        d.metrics.length > 0 && (
+          <div class="cs__metrics">
+            {d.metrics.map((m) => (
+              <MetricCallout value={m.value} caption={m.caption} footnote={m.footnote} />
+            ))}
+          </div>
+        )
+      }
+      {d.metricsNote && <p class="label cs__metrics-note">{d.metricsNote}</p>}
+    </section>
+
+    {
+      d.status && (
+        <div class="cs__status">
+          <MarginNote label="Status">{d.status}</MarginNote>
+        </div>
+      )
+    }
+
+    <section class="cs__body">
+      <Content />
+    </section>
+
+    <nav class="cs__back">
+      <a class="link" href="/#work">← All work</a>
+    </nav>
+  </article></div>
+</Base>
+
+<style>
+  .cs {
+    padding-block: var(--space-8);
+  }
+
+  .cs__head {
+    max-width: 56rem;
+  }
+
+  /* When a case study has hero media, the head becomes two columns:
+     the pitch on the left, the living screen on the right. */
+  .cs__head--with-media {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 1fr);
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  .cs__head--with-media .cs__meta,
+  .cs__head--with-media .cs__tools {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 820px) {
+    .cs__head--with-media {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cs__media {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: center;
+  }
+
+  .cs__media video,
+  .cs__media img {
+    width: 100%;
+    max-height: 34rem;
+    object-fit: contain;
+    border-radius: var(--radius-2);
+    border: 1px solid var(--line-soft);
+    box-shadow: var(--shadow-lift);
+    background: var(--void-1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Looping hero videos pause for reduced-motion users */
+    .cs__media video {
+      display: none;
+    }
+
+    .cs__media::before {
+      content: 'video paused (reduced motion) — use the ▶ walkthrough button';
+      font-family: var(--font-mono);
+      font-size: var(--text-label);
+      color: var(--ink-500);
+      border: 1px dashed var(--line-soft);
+      border-radius: var(--radius-2);
+      padding: var(--space-6);
+    }
+  }
+
+  .cs__title {
+    margin-top: var(--space-4);
+    font-size: var(--text-h1);
+    max-width: 22ch;
+  }
+
+  .cs__oneliner {
+    margin-top: var(--space-5);
+    max-width: 60ch;
+  }
+
+  .cs__why {
+    margin-top: var(--space-3);
+    max-width: 60ch;
+  }
+
+  .cs__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+
+  .cs__actions:empty {
+    display: none;
+  }
+
+  .cs__meta {
+    margin-top: var(--space-6);
+  }
+
+  .cs__tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+  }
+
+  .cs__exec {
+    margin-top: var(--space-8);
+  }
+
+  .cs__exec-grid {
+    display: grid;
+    gap: var(--space-5);
+    margin: var(--space-6) 0 0;
+    max-width: var(--container-prose);
+  }
+
+  .cs__exec-grid dd {
+    margin: var(--space-2) 0 0;
+    line-height: var(--leading-body);
+  }
+
+  .cs__metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-7);
+    max-width: 56rem;
+  }
+
+  .cs__metrics-note {
+    margin-top: var(--space-4);
+    max-width: 70ch;
+  }
+
+  .cs__status {
+    margin-top: var(--space-7);
+    max-width: var(--container-prose);
+  }
+
+  .cs__body {
+    margin-top: var(--space-7);
+    max-width: var(--container-prose);
+    color: var(--ink-600);
+  }
+
+  /* Long-form prose: rendered markdown gets the calm Owen-style reading
+     treatment. :global() because the content is injected HTML. */
+  .cs__body :global(h2) {
+    margin-top: var(--space-8);
+    padding-top: var(--space-4);
+    border-top: 2px solid var(--ink-800);
+    font-size: var(--text-h2);
+  }
+
+  .cs__body :global(h3) {
+    margin-top: var(--space-6);
+    font-size: var(--text-h3);
+  }
+
+  .cs__body :global(p) {
+    margin-top: var(--space-4);
+    line-height: var(--leading-body);
+  }
+
+  .cs__body :global(ul),
+  .cs__body :global(ol) {
+    margin-top: var(--space-4);
+    padding-left: 1.4em;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .cs__body :global(blockquote) {
+    margin: var(--space-5) 0 0;
+    border-left: 2px solid var(--accent-500);
+    padding-left: var(--space-4);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--text-lead);
+    color: var(--ink-800);
+  }
+
+  .cs__body :global(table) {
+    display: block;
+    overflow-x: auto;
+    margin-top: var(--space-5);
+    border-collapse: collapse;
+    font-size: var(--text-small);
+  }
+
+  .cs__body :global(th) {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+    text-align: left;
+    padding: var(--space-2) var(--space-4) var(--space-2) 0;
+    border-bottom: 2px solid var(--ink-800);
+  }
+
+  .cs__body :global(td) {
+    padding: var(--space-3) var(--space-4) var(--space-3) 0;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: top;
+    min-width: 9rem;
+  }
+
+  .cs__body :global(strong) {
+    color: var(--ink-900);
+  }
+
+  .cs__body :global(hr) {
+    margin-top: var(--space-7);
+    border: none;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .cs__body :global(em) {
+    font-family: var(--font-serif);
+  }
+
+  .cs__back {
+    margin-top: var(--space-8);
+  }
+</style>

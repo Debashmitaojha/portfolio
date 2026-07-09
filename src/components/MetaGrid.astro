@@ -1,0 +1,38 @@
+---
+/**
+ * MetaGrid — the case study facts strip: role, timeline, tools, method.
+ * Pattern extracted from the preciousaghaeze reference (Roles/Collab/Tools/Duration).
+ */
+interface Props {
+  items: { term: string; detail: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<dl class="meta">
+  {
+    items.map((item) => (
+      <div class="meta__cell">
+        <dt class="label">{item.term}</dt>
+        <dd>{item.detail}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--space-5) var(--space-6);
+    border-block: 1px solid var(--line-soft);
+    padding-block: var(--space-5);
+  }
+
+  .meta__cell dd {
+    margin: var(--space-2) 0 0;
+    color: var(--ink-800);
+    font-size: var(--text-body);
+  }
+</style>

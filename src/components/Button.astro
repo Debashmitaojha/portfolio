@@ -1,0 +1,91 @@
+---
+/**
+ * Button — three voices:
+ *  primary  = filled ink (main action: "Read full case study")
+ *  ghost    = inked outline (secondary: "Try the live demo")
+ *  quiet    = mono label with arrow (tertiary: "1-min walkthrough")
+ * Renders an <a> when href is given, otherwise a <button>.
+ */
+interface Props {
+  variant?: 'primary' | 'ghost' | 'quiet';
+  href?: string;
+  class?: string;
+}
+
+const { variant = 'primary', href, class: className } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag class:list={['btn', `btn--${variant}`, className]} href={href}>
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    font-weight: 600;
+    line-height: 1;
+    padding: 0.78em 1.35em;
+    border-radius: var(--radius-1);
+    border: 1.5px solid var(--ink-800);
+    cursor: pointer;
+    transition:
+      transform var(--dur-1) var(--ease-out),
+      box-shadow var(--dur-1) var(--ease-out),
+      background-color var(--dur-1) var(--ease-out),
+      color var(--dur-1) var(--ease-out);
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn--primary {
+    background: var(--ink-800);
+    color: var(--paper-0);
+  }
+
+  .btn--primary:hover,
+  .btn--primary:focus-visible {
+    background: var(--ink-900);
+    box-shadow: var(--shadow-paper);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--ink-800);
+  }
+
+  .btn--ghost:hover,
+  .btn--ghost:focus-visible {
+    background: var(--paper-0);
+    box-shadow: var(--shadow-paper);
+  }
+
+  .btn--quiet {
+    border: none;
+    background: none;
+    padding: 0.4em 0.1em;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--accent-600);
+    border-radius: 0;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-size: 0% 1.5px;
+    background-position: 0 100%;
+    transition: background-size var(--dur-2) var(--ease-out);
+  }
+
+  .btn--quiet:hover,
+  .btn--quiet:focus-visible {
+    background-size: 100% 1.5px;
+  }
+</style>

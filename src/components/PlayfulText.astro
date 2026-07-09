@@ -1,0 +1,56 @@
+---
+/**
+ * PlayfulText — letters as characters (principle extracted from
+ * samuelday.de: type that behaves like a living thing, in one contained
+ * pocket of the page). On hover the letters ripple: odd letters dip,
+ * even letters lift, staggered left-to-right like a wave through ink.
+ * Screen readers get the plain text; the spans are decoration.
+ */
+interface Props {
+  text: string;
+  class?: string;
+}
+
+const { text, class: className } = Astro.props;
+const letters = [...text];
+---
+
+<span class:list={['playful', className]} role="text" aria-label={text}>
+  {
+    letters.map((ch, i) => (
+      <span class="playful__ch" style={`--i: ${i}`} aria-hidden="true">
+        {ch === ' ' ? ' ' : ch}
+      </span>
+    ))
+  }
+</span>
+
+<style>
+  .playful {
+    display: inline-flex;
+    cursor: default;
+  }
+
+  .playful__ch {
+    display: inline-block;
+    transition: transform var(--dur-2) var(--ease-out);
+    transition-delay: calc(var(--i) * 24ms);
+  }
+
+  .playful:hover .playful__ch,
+  .playful:focus-visible .playful__ch {
+    transform: translateY(-0.14em) rotate(-3deg);
+  }
+
+  .playful:hover .playful__ch:nth-child(even),
+  .playful:focus-visible .playful__ch:nth-child(even) {
+    transform: translateY(0.08em) rotate(3.5deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .playful:hover .playful__ch,
+    .playful:focus-visible .playful__ch {
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,222 @@
+/* ==========================================================================
+   BASE — reset, textured surfaces, the four type voices, shared utilities.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  /* Belt-and-suspenders: no single element (however it misbehaves) should
+     ever be able to force the whole page into horizontal scroll. */
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--void-0);
+  color: var(--bone-0);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/* ---- Textures ------------------------------------------------------------
+   Each surface carries its own grain, applied via ::before on .textured
+   sections. Dark = dusty mottle; light = paper speckle. Pure data-URIs. */
+
+.textured {
+  position: relative;
+  /* flow-root stops child margins collapsing through — the TornEdge's
+     negative margin must overlap the PREVIOUS section, not drag this one up */
+  display: flow-root;
+}
+
+.textured > * {
+  position: relative;
+  z-index: 2;
+}
+
+.textured::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.055 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.surface-bone.textured::before,
+.surface-pink.textured::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.09 0 0 0 0 0.1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Crumpled-paper structure (the atul effect): diffuse lighting over
+   large-scale noise reads as real creases and folds. Sits under the
+   grain, blended softly so content stays fully legible. */
+.textured::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.011 0.014' numOctaves='5' seed='7' stitchTiles='stitch' result='n'/%3E%3CfeDiffuseLighting in='n' lighting-color='%23ffffff' surfaceScale='2.4'%3E%3CfeDistantLight azimuth='235' elevation='56'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
+  background-size: 700px 700px;
+  mix-blend-mode: soft-light;
+  opacity: 0.55;
+}
+
+.surface-void.textured::after {
+  opacity: 0.4;
+}
+
+/* ---- The four voices ------------------------------------------------------*/
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  color: var(--ink-900);
+  line-height: var(--leading-tight);
+  font-weight: var(--serif-weight);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--text-h1); }
+h2 { font-size: var(--text-h2); }
+h3 { font-size: var(--text-h3); line-height: var(--leading-snug); }
+
+p {
+  text-wrap: pretty;
+}
+
+/* THE SHOUT — condensed caps, atul-loud. Use for statements, not paragraphs. */
+.shout {
+  font-family: var(--font-shout);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: var(--text-shout);
+  line-height: var(--leading-shout);
+  letter-spacing: var(--tracking-shout);
+  color: var(--ink-900);
+  text-wrap: balance;
+}
+
+.shout--2 {
+  font-size: var(--text-shout-2);
+}
+
+/* THE ASIDE — serif italic, the quiet line under the loud one. */
+.aside {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-lead);
+  color: var(--ink-600);
+}
+
+/* Legacy display voice (style tile specimens) — big serif statement. */
+.display {
+  font-family: var(--font-serif);
+  font-size: var(--text-shout-2);
+  line-height: var(--leading-tight);
+  color: var(--ink-900);
+  font-weight: var(--serif-weight);
+}
+
+/* THE ANNOTATION — mono labels: kickers, meta, figure refs. */
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-500);
+}
+
+.lead {
+  font-size: var(--text-lead);
+  color: var(--ink-600);
+}
+
+/* ---- Links ---------------------------------------------------------------*/
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link {
+  color: var(--accent-600);
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0% 1.5px;
+  background-position: 0 96%;
+  transition: background-size var(--dur-2) var(--ease-out);
+}
+
+.link:hover,
+.link:focus-visible {
+  background-size: 100% 1.5px;
+}
+
+/* ---- Layout utilities ------------------------------------------------------*/
+
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Numbered section rule — the Luka spine: "01. work" over a hairline */
+.section-rule {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: var(--space-3);
+}
+
+/* ---- Focus & selection ------------------------------------------------------*/
+
+:focus-visible {
+  outline: 2px solid var(--accent-600);
+  outline-offset: 3px;
+  border-radius: var(--radius-1);
+}
+
+::selection {
+  background: var(--acid);
+  color: var(--void-0);
+}
+
+/* ---- Motion discipline ------------------------------------------------------*/
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -1,0 +1,38 @@
+---
+/**
+ * MarginNote — the "designer's field journal" annotation voice.
+ * An italic serif aside with an ink rule, used for honest asides:
+ * attribution notes, pilot caveats, decision rationale.
+ */
+interface Props {
+  label?: string; // small mono kicker above the note, e.g. "NOTE" or "WHY"
+}
+
+const { label } = Astro.props;
+---
+
+<aside class="note">
+  {label && <span class="note__label label">{label}</span>}
+  <div class="note__body"><slot /></div>
+</aside>
+
+<style>
+  .note {
+    border-left: 2px solid var(--accent-500);
+    padding-left: var(--space-4);
+  }
+
+  .note__label {
+    display: block;
+    color: var(--accent-600);
+    margin-bottom: var(--space-2);
+  }
+
+  .note__body {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--text-lead);
+    line-height: 1.5;
+    color: var(--ink-600);
+  }
+</style>

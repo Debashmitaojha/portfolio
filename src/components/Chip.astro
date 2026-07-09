@@ -1,0 +1,33 @@
+---
+/** Chip — small mono tag for tools, methods, categories. */
+---
+
+<span class="chip"><slot /></span>
+
+<style>
+  .chip {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.04em;
+    color: var(--ink-600);
+    background: var(--paper-0);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-pill);
+    padding: 0.3em 0.85em;
+    white-space: nowrap;
+    transition:
+      transform var(--dur-1) var(--ease-out),
+      box-shadow var(--dur-1) var(--ease-out);
+  }
+
+  /* Stamp tilt: chips rock on hover, alternating direction by position. */
+  .chip:hover {
+    transform: rotate(-2.5deg) translateY(-1px);
+    box-shadow: var(--shadow-paper);
+  }
+
+  .chip:nth-of-type(even):hover {
+    transform: rotate(2.5deg) translateY(-1px);
+  }
+</style>

@@ -1,0 +1,370 @@
+---
+/**
+ * STYLE TILE — Phase 1 deliverable for approval.
+ * Every element on this page is built from the production tokens and
+ * components; nothing is mocked. Sample copy comes from the real
+ * Tata Neu audit — no placeholder text.
+ */
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Chip from '../components/Chip.astro';
+import MetricCallout from '../components/MetricCallout.astro';
+import MetaGrid from '../components/MetaGrid.astro';
+import MarginNote from '../components/MarginNote.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CaseCard from '../components/CaseCard.astro';
+import Signature from '../components/Signature.astro';
+import PlayfulText from '../components/PlayfulText.astro';
+
+const paperSwatches = [
+  { token: '--void-0', hex: '#101013', role: 'dark hero, footer, close' },
+  { token: '--bone-0', hex: '#F4EFE4', role: 'work rack, reading pages' },
+  { token: '--pink-wash', hex: '#CF8FB4', role: 'the one loud strip' },
+  { token: '--paper-0', hex: '#FAF6EC', role: 'cards on bone' },
+];
+
+const inkSwatches = [
+  { token: '--ink-900', hex: '#121215', role: 'display headlines on light' },
+  { token: '--ink-800', hex: '#1B1B20', role: 'primary text on light' },
+  { token: '--ink-600', hex: '#3A3A42', role: 'subheadings' },
+  { token: '--ink-500', hex: '#55555E', role: 'secondary text' },
+  { token: '--bone-2', hex: '#DDD5C2', role: 'hairlines on light' },
+];
+
+const accentSwatches = [
+  { token: '--acid', hex: '#CDE84A', role: 'links & the big CTA on dark' },
+  { token: '--blood', hex: '#C2401D', role: 'links & alerts on light' },
+  { token: '--violet', hex: '#6A4DE0', role: 'electric moments, sparingly' },
+];
+---
+
+<Base
+  title="Style Tile · Ink & Paper — Debashmita Ojha"
+  description="Phase 1 design-system deliverable for Debashmita Ojha's portfolio."
+  bare
+>
+  <div class="surface-bone textured"><div class="container tile">
+    <!-- ============ 00 · Direction ============ -->
+    <header class="tile__hero">
+      <p class="label">Style tile · v2 · Torn &amp; Told</p>
+      <h1 class="shout shout--2" style="margin-top: var(--space-4);">
+        Torn &amp; Told
+      </h1>
+      <p class="lead" style="max-width: 58ch; margin-top: var(--space-5);">
+        Near-black grunge, bone-white speckled paper, one dusty-pink strip and
+        acid accents. Loud condensed statements, serif-italic asides, mono
+        annotations — and torn-paper seams between the worlds.
+      </p>
+      <div style="margin-top: var(--space-7);">
+        <Signature width="300px" />
+        <p class="label" style="margin-top: var(--space-3);">
+          the mark writes itself — once per visit, skipped under reduced motion
+        </p>
+      </div>
+    </header>
+
+    <!-- ============ 01 · Palette ============ -->
+    <section class="tile__section">
+      <SectionHeading number="01" kicker="tokens.css" title="Palette" />
+      <div class="swatch-groups">
+        <div>
+          <p class="label swatch-group__name">Paper</p>
+          <div class="swatches">
+            {
+              paperSwatches.map((s) => (
+                <figure class="swatch">
+                  <div class="swatch__color swatch__color--line" style={`background:${s.hex}`} />
+                  <figcaption>
+                    <code>{s.token}</code>
+                    <span class="swatch__role">{s.role}</span>
+                  </figcaption>
+                </figure>
+              ))
+            }
+          </div>
+        </div>
+        <div>
+          <p class="label swatch-group__name">Ink</p>
+          <div class="swatches">
+            {
+              inkSwatches.map((s) => (
+                <figure class="swatch">
+                  <div class="swatch__color" style={`background:${s.hex}`} />
+                  <figcaption>
+                    <code>{s.token}</code>
+                    <span class="swatch__role">{s.role}</span>
+                  </figcaption>
+                </figure>
+              ))
+            }
+          </div>
+        </div>
+        <div>
+          <p class="label swatch-group__name">Accent — one, warm</p>
+          <div class="swatches">
+            {
+              accentSwatches.map((s) => (
+                <figure class="swatch">
+                  <div class="swatch__color" style={`background:${s.hex}`} />
+                  <figcaption>
+                    <code>{s.token}</code>
+                    <span class="swatch__role">{s.role}</span>
+                  </figcaption>
+                </figure>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 02 · Typography ============ -->
+    <section class="tile__section">
+      <SectionHeading number="02" kicker="three voices" title="Typography" />
+
+      <div class="type-specimen">
+        <p class="label">Fraunces — editorial serif, soft &amp; slightly wonky</p>
+        <p class="display" style="margin-top: var(--space-3);">
+          Designs for how people
+          <span class="ink-underline"
+            >actually think<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"
+              ><path d="M2 7 Q 28 3.5, 52 6 T 98 5.5" /></svg
+            ></span
+          >
+        </p>
+      </div>
+
+      <div class="type-specimen">
+        <p class="label">Source Sans 3 — humanist body, 65ch measure</p>
+        <p style="max-width: 65ch; margin-top: var(--space-3);">
+          Tata Neu's home screen makes a promise: all of Tata in one app.
+          Groceries, electronics, fashion, pharmacy, travel. But the cart
+          breaks that promise — the same "add to cart" action produces
+          different system responses depending on the brand, with no signal in
+          the layer the user is watching. This is an interception problem, not
+          a recovery problem.
+        </p>
+      </div>
+
+      <div class="type-specimen">
+        <p class="label">IBM Plex Mono — the annotation voice: metrics, labels, figure refs</p>
+        <p
+          style="font-family: var(--font-mono); color: var(--ink-600); margin-top: var(--space-3); font-size: var(--text-small); max-width: 65ch;"
+        >
+          FIG 1 — THE REAL GLOBAL CART. TWO BRANDS ALWAYS SHOWN; FIVE BRANDS
+          NEVER. METHOD: REPRODUCIBLE ADD-TO-CART TEST ACROSS 7 BRANDS.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 03 · Ink details ============ -->
+    <section class="tile__section">
+      <SectionHeading number="03" kicker="the journal voice" title="Ink details" />
+      <div class="details-grid">
+        <MarginNote label="Honesty note">
+          Metrics shown are from the Tata Sons FY25 annual report — cited as
+          business context, never claimed as my own design outcomes.
+        </MarginNote>
+        <div>
+          <p style="max-width: 48ch;">
+            Inline links look like this:
+            <a class="link" href="#">read the full friction map</a>. The
+            underline draws itself on hover — ink, not decoration. Chips carry
+            tools and methods:
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4);">
+            <Chip>UX audit</Chip>
+            <Chip>React prototype</Chip>
+            <Chip>Usability pilot · n=1</Chip>
+            <Chip>Figma</Chip>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 04 · Actions ============ -->
+    <section class="tile__section">
+      <SectionHeading number="04" kicker="three weights, one job each" title="Actions" />
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-5); margin-top: var(--space-6);">
+        <Button variant="primary" href="#">Read the case study →</Button>
+        <Button variant="ghost" href="#">Try the live demo</Button>
+        <Button variant="quiet" href="#">▶ 1-min walkthrough</Button>
+      </div>
+    </section>
+
+    <!-- ============ 05 · Evidence blocks ============ -->
+    <section class="tile__section">
+      <SectionHeading number="05" kicker="numbers that earn their size" title="Evidence blocks" />
+      <div class="metrics-row">
+        <MetricCallout value="<25%" caption="of ~140M NeuPass users complete a multi-category transaction" footnote="†" />
+        <MetricCallout value="6 taps" caption="to recover a 'lost' item across 3 context switches" />
+        <MetricCallout value="<30s" caption="to find both items unaided in the pilot — the real app scores ~0" footnote="†" />
+      </div>
+      <p class="label" style="margin-top: var(--space-5);">
+        † source: Tata Sons FY25 annual report · moderated pilot, n=1 — footnotes are part of the system
+      </p>
+
+      <div style="margin-top: var(--space-7);">
+        <MetaGrid
+          items={[
+            { term: 'Role', detail: 'Solo — research, audit, prototype' },
+            { term: 'Timeline', detail: 'UX Sprint · June 2026' },
+            { term: 'Method', detail: '5-step AI co-pilot workflow' },
+            { term: 'Output', detail: 'Working React prototype, 2 iterations' },
+          ]}
+        />
+      </div>
+    </section>
+
+    <!-- ============ 06 · The card, assembled ============ -->
+    <section class="tile__section">
+      <SectionHeading number="06" kicker="everything above, working together" title="Case card" />
+      <div style="max-width: 24rem; margin-top: var(--space-6);">
+        <CaseCard
+          index="01"
+          kicker="Tata Neu · Super-app · UX audit + prototype"
+          title="The home screen sells a super-app. The cart breaks the promise."
+          oneLiner="A reproducible cart experiment across 7 Tata brands, a Ghost Tab fix that needs zero backend change, and a pilot-tested iteration — designed to intercept the exact step where sessions collapse."
+          href="#"
+          pattern="rings"
+          hasVideo={true}
+        />
+      </div>
+      <p class="label" style="margin-top: var(--space-4);">
+        no cover image? CaseCover generates an ink motif (rings/dots/waves) from the site's own tokens — never stock or AI art
+      </p>
+    </section>
+
+    <!-- ============ 07 · Motion rules ============ -->
+    <section class="tile__section">
+      <SectionHeading number="07" kicker="every animation has one job" title="Motion & play" />
+      <ul class="motion-rules">
+        <li><strong>Hover &amp; press</strong> — 160ms, ease-out. Cards lift like paper; buttons settle 1px.</li>
+        <li><strong>Underlines</strong> — 300ms draw, left to right, like a pen stroke.</li>
+        <li><strong>Dog-ear</strong> — hover a case card and its top-right corner folds, like a page marked to return to.</li>
+        <li><strong>Stamp chips</strong> — tags rock ±2.5° on hover, alternating direction.</li>
+        <li><strong>Living letters</strong> — the wordmark ripples letter-by-letter on hover (try it below).</li>
+        <li><strong>Section entrances</strong> — 650ms fade-and-settle, once, on scroll into view.</li>
+        <li><strong>The signature</strong> — ~2.6s, writes itself in true pen order once per visit: the D, then “ojha” with the flourish, then the j-dot. The only long animation on the site.</li>
+        <li><strong>Reduced motion</strong> — everything above collapses to instant states. Nothing loops. Ever.</li>
+      </ul>
+
+      <div class="play-demo">
+        <p class="label" style="margin-bottom: var(--space-3);">hover the letters — playful lives in pockets, never in body text</p>
+        <PlayfulText text="Dojha" class="play-demo__word" />
+      </div>
+    </section>
+
+    <!-- ============ Footer ============ -->
+    <footer class="tile__footer">
+      <Signature width="220px" />
+      <p class="label" style="margin-top: var(--space-4);">
+        Torn &amp; Told · style tile v2 · built from tokens.css — change one token, everything follows
+      </p>
+    </footer>
+  </div></div>
+</Base>
+
+<style>
+  .tile {
+    padding-block: var(--space-8) var(--space-7);
+  }
+
+  .tile__hero {
+    padding-bottom: var(--space-8);
+  }
+
+  .tile__section {
+    margin-top: var(--space-8);
+  }
+
+  .swatch-groups {
+    display: grid;
+    gap: var(--space-7);
+    margin-top: var(--space-6);
+  }
+
+  .swatch-group__name {
+    margin-bottom: var(--space-4);
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    gap: var(--space-4);
+  }
+
+  .swatch__color {
+    height: 5.5rem;
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-paper);
+  }
+
+  .swatch__color--line {
+    border: 1px solid var(--line-soft);
+  }
+
+  .swatch figcaption {
+    margin-top: var(--space-2);
+    display: grid;
+    gap: 2px;
+  }
+
+  .swatch code {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    color: var(--ink-800);
+  }
+
+  .swatch__role {
+    font-size: var(--text-small);
+    color: var(--ink-500);
+  }
+
+  .type-specimen {
+    margin-top: var(--space-7);
+  }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: var(--space-7);
+    margin-top: var(--space-6);
+    align-items: start;
+  }
+
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+  }
+
+  .motion-rules {
+    margin-top: var(--space-6);
+    padding-left: 1.2em;
+    display: grid;
+    gap: var(--space-3);
+    max-width: 62ch;
+  }
+
+  .motion-rules strong {
+    color: var(--ink-900);
+  }
+
+  .play-demo {
+    margin-top: var(--space-7);
+  }
+
+  .play-demo :global(.play-demo__word) {
+    font-family: var(--font-serif);
+    font-size: var(--text-display);
+    color: var(--ink-900);
+  }
+
+  .tile__footer {
+    margin-top: var(--space-9);
+    border-top: 2px solid var(--ink-800);
+    padding-top: var(--space-7);
+  }
+</style>

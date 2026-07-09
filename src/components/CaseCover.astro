@@ -1,0 +1,100 @@
+---
+/**
+ * CaseCover — the square editorial cover for a case study card, in the
+ * absence of a real screenshot. Three hand-inked motifs (rings / dots /
+ * waves) drawn from the site's own tokens — not stock or AI art — so a
+ * new case study looks considered even before you have a product shot.
+ * Pass `cover` in the case study's frontmatter to use a real image instead.
+ */
+interface Props {
+  index: string; // "01" — stamped large, off-corner
+  pattern?: 'rings' | 'dots' | 'waves';
+}
+
+const { index, pattern = 'rings' } = Astro.props;
+---
+
+<div class:list={['cover', `cover--${pattern}`]} aria-hidden="true">
+  <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+    {
+      pattern === 'rings' && (
+        <g fill="none" stroke="var(--ink-800)">
+          <circle cx="210" cy="190" r="40" stroke-width="2" opacity="0.85" />
+          <circle cx="210" cy="190" r="78" stroke-width="1.6" opacity="0.6" />
+          <circle cx="210" cy="190" r="118" stroke-width="1.3" opacity="0.4" />
+          <circle cx="210" cy="190" r="160" stroke-width="1" opacity="0.25" />
+          <circle cx="210" cy="190" r="204" stroke-width="1" opacity="0.14" />
+          <circle cx="210" cy="190" r="14" fill="var(--accent-600)" stroke="none" />
+        </g>
+      )
+    }
+    {
+      pattern === 'dots' && (
+        <g fill="var(--ink-800)">
+          {Array.from({ length: 9 }).map((_, row) =>
+            Array.from({ length: 9 }).map((_, col) => {
+              const cx = 30 + col * 44;
+              const cy = 30 + row * 44;
+              const big = (row + col) % 7 === 0;
+              return (
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r={big ? 9 : 3.4}
+                  fill={big ? 'var(--accent-600)' : 'var(--ink-800)'}
+                  opacity={big ? 0.9 : 0.32}
+                />
+              );
+            })
+          )}
+        </g>
+      )
+    }
+    {
+      pattern === 'waves' && (
+        <g fill="none" stroke="var(--ink-800)">
+          <path d="M-20,80 Q 80,40 180,80 T 420,80" stroke-width="2" opacity="0.55" />
+          <path d="M-20,150 Q 90,190 190,150 T 420,150" stroke-width="2.4" opacity="0.75" />
+          <path d="M-20,220 Q 70,180 180,220 T 420,220" stroke-width="1.6" opacity="0.4" />
+          <path d="M-20,290 Q 100,330 190,290 T 420,290" stroke-width="2" opacity="0.55" />
+          <path
+            d="M-20,150 Q 90,190 190,150 T 420,150"
+            stroke="var(--accent-600)"
+            stroke-width="3"
+            opacity="0.9"
+            stroke-dasharray="1 14"
+            stroke-linecap="round"
+          />
+        </g>
+      )
+    }
+  </svg>
+  <span class="cover__index">{index}</span>
+</div>
+
+<style>
+  .cover {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--paper-2);
+    overflow: hidden;
+  }
+
+  .cover svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .cover__index {
+    position: absolute;
+    right: 0.7rem;
+    bottom: 0.4rem;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 3.2rem;
+    line-height: 1;
+    color: var(--ink-800);
+    opacity: 0.16;
+  }
+</style>

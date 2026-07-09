@@ -1,0 +1,43 @@
+---
+/**
+ * SectionHeading — numbered editorial section head.
+ * "01 · Problem framing" pattern: mono number, serif title, ink rule.
+ */
+interface Props {
+  number?: string; // "01"
+  kicker?: string; // small mono line above the title
+  title: string;
+  id?: string;
+}
+
+const { number, kicker, title, id } = Astro.props;
+---
+
+<header class="section-head" id={id}>
+  <div class="section-head__meta">
+    {number && <span class="section-head__number">{number}</span>}
+    {kicker && <span class="label">{kicker}</span>}
+  </div>
+  <h2 class="section-head__title">{title}</h2>
+</header>
+
+<style>
+  .section-head {
+    border-top: 2px solid var(--ink-800);
+    padding-top: var(--space-4);
+  }
+
+  .section-head__meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    margin-bottom: var(--space-3);
+  }
+
+  .section-head__number {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--text-h3);
+    color: var(--accent-600);
+  }
+</style>

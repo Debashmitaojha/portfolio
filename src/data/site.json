@@ -1,0 +1,56 @@
+{
+  "name": "Debashmita Ojha",
+  "role": "Product Designer",
+  "location": "India",
+  "email": "debashmitaojha16@gmail.com",
+
+  "hero": {
+    "kicker": "product designer · india",
+    "shout": "I find the screen where products lose people.",
+    "aside": "…then I make it keep them instead.",
+    "note": "audits · working prototypes · receipts attached"
+  },
+
+  "intro": {
+    "lines": [
+      "i'm debashmita --",
+      "a product designer, UX auditor,",
+      "prototype builder, and professional",
+      "asker of 'but why did the user leave?'",
+      "",
+      "currently making products make sense."
+    ],
+    "artNote": "swap this with your own drawing — public/brand/intro-art.png"
+  },
+
+  "workSection": {
+    "aside": "four projects. zero filler."
+  },
+
+  "hats": {
+    "shout": "I wear many hats.",
+    "aside": "audit brain, builder hands, honest mouth.",
+    "stickers": ["UX AUDITS", "WORKING PROTOTYPES", "FLOWS THAT CONVERT", "METRICS, NOT VIBES"]
+  },
+
+  "close": {
+    "shout": "Got a flow that quietly leaks users?",
+    "aside": "i find the hole. then i patch it.",
+    "cta": "EMAIL ME"
+  },
+
+  "spiritAnimal": {
+    "name": "the crow",
+    "emoji": "🐦‍⬛",
+    "gif": "",
+    "blurb": "remembers every face, collects every shiny detail, refuses to drop the thing it found. relatable."
+  },
+
+  "links": {
+    "linkedin": "",
+    "behance": "",
+    "github": ""
+  },
+
+  "_comment": "Everything here is yours to edit — copy, email, socials, spirit animal. Empty link values are hidden automatically."
+}

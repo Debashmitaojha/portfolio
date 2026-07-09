@@ -1,0 +1,180 @@
+---
+/**
+ * Resume — DRAFT assembled only from verifiable folder evidence.
+ * Everything [BRACKETED] needs Debashmita's real data before launch.
+ * Drop a PDF at public/resume.pdf and the download button activates
+ * automatically at the next build.
+ */
+import fs from 'node:fs';
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Chip from '../components/Chip.astro';
+import MarginNote from '../components/MarginNote.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import site from '../data/site.json';
+
+const hasPdf = fs.existsSync('public/resume.pdf');
+
+const projects = [
+  {
+    when: 'June 2026',
+    what: 'Tata Neu cross-category cart — UX audit, Ghost Tab fix, React prototype, pilot usability test (2 iterations)',
+  },
+  {
+    when: 'June 2026',
+    what: 'Retail checkout app ("Scan and Go") — full working build: React Native, Firebase OTP/Firestore, Razorpay, coupon engine',
+  },
+  {
+    when: '2026',
+    what: 'PhonePe Gold SIP adoption concept — 5 proto-personas, 5-screen onboarding, documented PM/Eng review process, interactive artifact',
+  },
+  {
+    when: 'May 2026',
+    what: 'Blinkit product discovery — 17-page audit: 3-layer failure model, intent-mode framework, 6-fix prioritised roadmap',
+  },
+];
+
+const skills = [
+  'UX audits',
+  'Usability testing',
+  'Information architecture',
+  'Flow & interaction design',
+  'Proto-personas',
+  'Business metrics thinking',
+  'AI-augmented design & build',
+  'React prototyping',
+  'Firebase',
+  'Razorpay integration',
+  'Design tokens & systems',
+  'HTML/CSS · basic Git · APIs',
+];
+---
+
+<Base
+  title={`Resume — ${site.name}`}
+  description="Resume of Debashmita Ojha — product designer."
+>
+  <div class="surface-bone textured"><div class="container resume">
+    <header class="resume__head">
+      <p class="label">Resume</p>
+      <h1 class="resume__title">{site.name}</h1>
+      <p class="lead">{site.role} · {site.location} · <a class="link" href={`mailto:${site.email}`}>{site.email}</a></p>
+
+      <div class="resume__actions">
+        {
+          hasPdf ? (
+            <Button variant="primary" href="/resume.pdf">Download PDF</Button>
+          ) : (
+            <p class="label">[ PDF appears here automatically once resume.pdf is dropped into public/ ]</p>
+          )
+        }
+      </div>
+
+      <div class="resume__draft">
+        <MarginNote label="Draft — read this first">
+          This resume is drafted from my project record only. Bracketed items
+          are unverified placeholders awaiting my own corrections — dates,
+          institution, and anything not evidenced in the work itself.
+        </MarginNote>
+      </div>
+    </header>
+
+    <section class="resume__section">
+      <SectionHeading number="01" kicker="what I've built and audited" title="Selected work" />
+      <ul class="resume__list">
+        {
+          projects.map((p) => (
+            <li>
+              <span class="resume__when label">{p.when}</span>
+              <span class="resume__what">{p.what}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="resume__section">
+      <SectionHeading number="02" kicker="the paper trail" title="Education" />
+      <ul class="resume__list">
+        <li>
+          <span class="resume__when label">[year]</span>
+          <span class="resume__what">[your degree — institution, city — add]</span>
+        </li>
+        <li>
+          <span class="resume__when label">2025–2026</span>
+          <span class="resume__what">Self-directed product design practice — UX sprints, audits, working builds [add courses/certifications if any]</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="resume__section">
+      <SectionHeading number="03" kicker="tools follow problems" title="Skills" />
+      <div class="resume__chips">
+        {skills.map((s) => <Chip>{s}</Chip>)}
+      </div>
+    </section>
+  </div></div>
+</Base>
+
+<style>
+  .resume {
+    padding-block: var(--space-8);
+  }
+
+  .resume__title {
+    margin-top: var(--space-4);
+  }
+
+  .resume__head .lead {
+    margin-top: var(--space-3);
+  }
+
+  .resume__actions {
+    margin-top: var(--space-5);
+  }
+
+  .resume__draft {
+    margin-top: var(--space-6);
+    max-width: var(--container-prose);
+  }
+
+  .resume__section {
+    margin-top: var(--space-8);
+  }
+
+  .resume__list {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+    max-width: 56rem;
+  }
+
+  .resume__list li {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: var(--space-4);
+    align-items: baseline;
+  }
+
+  @media (max-width: 560px) {
+    .resume__list li {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+
+  .resume__what {
+    color: var(--ink-800);
+    line-height: var(--leading-body);
+  }
+
+  .resume__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-6);
+    max-width: 56rem;
+  }
+</style>

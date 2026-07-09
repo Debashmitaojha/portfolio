@@ -1,0 +1,236 @@
+---
+/**
+ * Home — the seven-block spine, surfaced in three worlds:
+ * 00 dark shout hero (positioning line, 5-second read)
+ * 01 bone work rack (selected work, why-lines, tight curation)
+ * 02 pink hats strip (the point of view you remember)
+ * …then the global footer carries the one clear next step.
+ * All copy lives in src/data/site.json — edit there, not here.
+ */
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import CaseCard from '../components/CaseCard.astro';
+import TornEdge from '../components/TornEdge.astro';
+import site from '../data/site.json';
+
+const caseStudies = (await getCollection('case-studies')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base title={`${site.name} — ${site.role}`} description={`${site.hero.shout} ${site.hero.aside}`}>
+  <!-- ============ 00 · the point ============ -->
+  <section class="hero surface-void textured">
+    <div class="container hero__inner">
+      <p class="label">00. the point — {site.hero.kicker}</p>
+      <h1 class="shout hero__shout">{site.hero.shout}</h1>
+      <p class="aside hero__aside">{site.hero.aside}</p>
+      <p class="label hero__note">{site.hero.note}</p>
+      <a class="link hero__cta" href="/#work">see the work ↓</a>
+    </div>
+  </section>
+
+  <!-- ============ 01 · work (with the mono self-intro up front) ============ -->
+  <section class="work surface-bone textured" id="work">
+    <TornEdge fill="var(--bone-0)" />
+    <div class="container work__inner">
+      <div class="intro">
+        <p class="intro__text">
+          {site.intro.lines.map((line) => (line === '' ? <br /> : <span>{line}<br /></span>))}
+        </p>
+        <figure class="intro__art">
+          <img
+            src="/brand/intro-art.png"
+            alt="A hand-drawn self portrait placeholder — currently the Dojha calligraphy"
+            loading="lazy"
+          />
+          <figcaption class="label">[ {site.intro.artNote} ]</figcaption>
+        </figure>
+      </div>
+
+      <div class="section-rule">
+        <p class="aside work__aside">{site.workSection.aside}</p>
+        <span class="label">01. work</span>
+      </div>
+      <div class="work__grid">
+        {
+          caseStudies.map((cs, i) => (
+            <CaseCard
+              index={String(i + 1).padStart(2, '0')}
+              kicker={cs.data.kicker}
+              title={cs.data.title}
+              oneLiner={cs.data.oneLiner}
+              href={`/work/${cs.id}`}
+              cover={cs.data.cover}
+              pattern={cs.data.pattern}
+              hasVideo={Boolean(cs.data.video)}
+              hasDemo={Boolean(cs.data.demo)}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 · many hats ============ -->
+  <section class="hats surface-pink textured">
+    <TornEdge fill="var(--pink-wash)" />
+    <div class="container hats__inner">
+      <div class="section-rule">
+        <p class="aside">{site.hats.aside}</p>
+        <span class="label">02. the person</span>
+      </div>
+      <p class="shout shout--2 hats__shout">{site.hats.shout}</p>
+      <div class="hats__stickers">
+        {
+          site.hats.stickers.map((s, i) => (
+            <span class="hats__sticker" style={`--rot: ${[-3, 2.5, -2, 3][i % 4]}deg; --d: ${i * 60}ms`}>
+              {s}
+            </span>
+          ))
+        }
+      </div>
+      <p class="hats__more">
+        the longer story is on the <a class="link" href="/about">about page</a> —
+        the off-hours stuff lives in the <a class="link" href="/playground">playground</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(var(--space-8), 14vh, 9rem) calc(var(--space-9) + 64px);
+  }
+
+  .hero__inner {
+    display: grid;
+    justify-items: start;
+  }
+
+  .hero__shout {
+    margin-top: var(--space-6);
+    max-width: 16ch;
+  }
+
+  .hero__aside {
+    margin-top: var(--space-5);
+    font-size: var(--text-h3);
+  }
+
+  .hero__note {
+    margin-top: var(--space-6);
+  }
+
+  .hero__cta {
+    margin-top: var(--space-6);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+  }
+
+  .work__inner {
+    padding-block: var(--space-7) var(--space-9);
+  }
+
+  /* The grace moment: mono self-intro beside a hand-drawn art slot */
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(14rem, 1fr);
+    gap: var(--space-7);
+    align-items: center;
+    padding-block: var(--space-7) var(--space-8);
+  }
+
+  @media (max-width: 720px) {
+    .intro {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .intro__text {
+    font-family: var(--font-mono);
+    font-size: clamp(1rem, 0.92rem + 0.5vw, 1.25rem);
+    line-height: 1.9;
+    color: var(--ink-800);
+  }
+
+  .intro__art {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: center;
+  }
+
+  .intro__art img {
+    width: min(100%, 22rem);
+    transform: rotate(-2deg);
+    transition: transform var(--dur-2) var(--ease-out);
+  }
+
+  .intro__art:hover img {
+    transform: rotate(0deg) scale(1.03);
+  }
+
+  .work__aside {
+    font-size: var(--text-h3);
+  }
+
+  .work__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-7);
+  }
+
+  @media (min-width: 700px) {
+    .work__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .hats__inner {
+    padding-block: var(--space-7) var(--space-9);
+  }
+
+  .hats__shout {
+    margin-top: var(--space-7);
+  }
+
+  .hats__stickers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4) var(--space-5);
+    margin-top: var(--space-6);
+  }
+
+  .hats__sticker {
+    display: inline-block;
+    font-family: var(--font-shout);
+    text-transform: uppercase;
+    font-size: clamp(1rem, 0.85rem + 0.9vw, 1.5rem);
+    letter-spacing: 0.03em;
+    background: var(--void-0);
+    color: var(--bone-0);
+    border-radius: var(--radius-1);
+    padding: 0.5em 0.9em;
+    transform: rotate(var(--rot));
+    box-shadow: 3px 4px 0 rgb(18 18 21 / 0.25);
+    transition: transform var(--dur-2) var(--ease-out);
+  }
+
+  .hats__sticker:nth-child(even) {
+    background: var(--bone-0);
+    color: var(--void-0);
+  }
+
+  .hats__sticker:hover {
+    transform: rotate(0deg) scale(1.05);
+  }
+
+  .hats__more {
+    margin-top: var(--space-7);
+    max-width: 48ch;
+    color: var(--ink-600);
+  }
+</style>

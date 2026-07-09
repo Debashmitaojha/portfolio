@@ -1,0 +1,154 @@
+---
+/**
+ * About — the about that filters (blueprint block 06): a real stance,
+ * not adjectives. All personal facts are [BRACKETED] placeholders for
+ * Debashmita to fill — nothing invented.
+ */
+import Base from '../layouts/Base.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import MarginNote from '../components/MarginNote.astro';
+import site from '../data/site.json';
+---
+
+<Base
+  title={`About — ${site.name}`}
+  description="Who I am, how I work, and what I believe about building products."
+>
+  <div class="surface-bone textured page">
+    <div class="container about">
+      <header class="about__head">
+        <p class="label">02. the person</p>
+        <h1 class="shout shout--2 about__title">Designs the flow. Builds the proof. Keeps the receipts.</h1>
+        <p class="aside">that's the whole pitch — the projects carry the evidence.</p>
+      </header>
+
+      <div class="about__grid">
+        <div class="about__body">
+          <p>
+            I'm Debashmita. I got into design through a simple irritation:
+            products that lose people at exactly the moment they were about to
+            say yes. So that's what I work on — auditing real products
+            end-to-end, finding the step where the experience breaks someone's
+            expectations, and fixing that step.
+          </p>
+          <p>
+            I don't stop at mockups. When a flow matters, I test my own fixes
+            with real tasks, and when a static screen can't answer the
+            question, I build the thing — working code, real payments flow,
+            the lot. Opinions are cheap; working software isn't.
+          </p>
+          <p>
+            [Debashmita: add 2–3 sentences of your own story here — where
+            you're from, what pulled you into design, what you're chasing.
+            This block is yours.]
+          </p>
+        </div>
+
+        <aside class="about__side">
+          <div class="about__photo" aria-hidden="true">
+            <span class="label">[ photo — drop a file at<br />public/brand/portrait.jpg ]</span>
+          </div>
+          <MarginNote label="Fun, to be honest">
+            [3–4 real fun facts go here — oddly specific beats generic. Until
+            then this placeholder stays visibly unfinished on purpose.]
+          </MarginNote>
+        </aside>
+      </div>
+
+      <section class="about__facts">
+        <SectionHeading number="01" kicker="the short record" title="Facts" />
+        <dl class="about__facts-grid">
+          <div>
+            <dt class="label">Education</dt>
+            <dd>[your degree · institution · year — add]</dd>
+          </div>
+          <div>
+            <dt class="label">Practice</dt>
+            <dd>UX audits · usability testing · flow design · AI-augmented building</dd>
+          </div>
+          <div>
+            <dt class="label">Based in</dt>
+            <dd>{site.location}</dd>
+          </div>
+          <div>
+            <dt class="label">Contact</dt>
+            <dd><a class="link" href={`mailto:${site.email}`}>{site.email}</a></dd>
+          </div>
+        </dl>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page {
+    padding-top: var(--space-6);
+  }
+
+  .about {
+    padding-block: var(--space-8);
+  }
+
+  .about__title {
+    margin-top: var(--space-4);
+    max-width: 24ch;
+  }
+
+  .about__head .aside {
+    margin-top: var(--space-4);
+  }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 1fr);
+    gap: var(--space-8);
+    margin-top: var(--space-7);
+  }
+
+  @media (max-width: 760px) {
+    .about__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .about__body {
+    display: grid;
+    gap: var(--space-4);
+    font-size: var(--text-lead);
+    color: var(--ink-600);
+    max-width: 58ch;
+  }
+
+  .about__side {
+    display: grid;
+    gap: var(--space-6);
+    align-content: start;
+  }
+
+  .about__photo {
+    aspect-ratio: 4 / 5;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    background: var(--paper-0);
+    border: 1px dashed var(--line-soft);
+    border-radius: var(--radius-2);
+    padding: var(--space-4);
+  }
+
+  .about__facts {
+    margin-top: var(--space-9);
+  }
+
+  .about__facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: var(--space-6);
+    margin: var(--space-6) 0 0;
+  }
+
+  .about__facts-grid dd {
+    margin: var(--space-2) 0 0;
+    color: var(--ink-800);
+  }
+</style>

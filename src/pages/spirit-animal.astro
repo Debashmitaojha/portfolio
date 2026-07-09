@@ -1,0 +1,80 @@
+---
+/**
+ * Spirit animal — the footer easter egg (a Luka Schulz tradition).
+ * Everything here is edited in src/data/site.json → spiritAnimal.
+ */
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+---
+
+<Base
+  title={`Spirit animal — ${site.name}`}
+  description="You found the easter egg."
+>
+  <div class="surface-void textured sa">
+    <div class="container sa__inner">
+      <p class="label">you found the easter egg</p>
+      {
+        'gif' in site.spiritAnimal && site.spiritAnimal.gif ? (
+          <img
+            class="sa__gif"
+            src={site.spiritAnimal.gif as string}
+            alt={site.spiritAnimal.name}
+          />
+        ) : (
+          <div class="sa__emoji" role="img" aria-label={site.spiritAnimal.name}>
+            {site.spiritAnimal.emoji}
+          </div>
+        )
+      }
+      <h1 class="shout shout--2">{site.spiritAnimal.name}</h1>
+      <p class="aside sa__blurb">{site.spiritAnimal.blurb}</p>
+      <a class="link sa__back" href="/">← back to the real world</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .sa {
+    min-height: 72vh;
+    display: grid;
+    align-items: center;
+  }
+
+  .sa__inner {
+    padding-block: var(--space-9);
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    gap: var(--space-4);
+  }
+
+  .sa__emoji {
+    font-size: clamp(4rem, 2rem + 10vw, 8rem);
+    line-height: 1;
+    filter: drop-shadow(0 10px 30px rgb(0 0 0 / 0.5));
+    transition: transform var(--dur-2) var(--ease-out);
+  }
+
+  .sa__emoji:hover {
+    transform: rotate(-8deg) scale(1.1);
+  }
+
+  .sa__gif {
+    width: min(24rem, 80vw);
+    border-radius: var(--radius-2);
+    box-shadow: 0 14px 44px rgb(0 0 0 / 0.55);
+  }
+
+  .sa__blurb {
+    max-width: 40ch;
+  }
+
+  .sa__back {
+    margin-top: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+  }
+</style>

@@ -1,0 +1,115 @@
+---
+/**
+ * Footer — the one clear next step (blueprint block 07), then the
+ * signature writing itself in bone ink, then the meta row with the
+ * spirit animal (a Luka Schulz tradition, made ours).
+ */
+import Signature from './Signature.astro';
+import TornEdge from './TornEdge.astro';
+import site from '../data/site.json';
+
+const socials = Object.entries(site.links).filter(([, url]) => url);
+const year = new Date().getFullYear();
+---
+
+<footer class="footer surface-void textured">
+  <TornEdge fill="var(--void-0)" />
+  <div class="container footer__inner">
+    <section class="footer__close">
+      <p class="shout shout--2">{site.close.shout}</p>
+      <p class="aside footer__aside">{site.close.aside}</p>
+      <a class="footer__cta" href={`mailto:${site.email}`}>
+        {site.close.cta} <span aria-hidden="true">→</span>
+      </a>
+      <p class="label footer__mailline">{site.email}</p>
+    </section>
+
+    <div class="footer__sig">
+      <Signature width="250px" tone="bone" />
+    </div>
+
+    <div class="footer__meta">
+      <span class="label">© {year} {site.name} · designed &amp; built by me</span>
+      <div class="footer__meta-links">
+        {
+          socials.map(([name, url]) => (
+            <a class="link footer__meta-link" href={url as string} rel="me noopener">
+              {name}
+            </a>
+          ))
+        }
+        <a class="link footer__meta-link" href="/spirit-animal">spirit animal ↗</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: var(--space-9);
+  }
+
+  .footer__inner {
+    padding-block: var(--space-8) var(--space-6);
+  }
+
+  .footer__close {
+    max-width: 46ch;
+  }
+
+  .footer__aside {
+    margin-top: var(--space-4);
+    font-size: var(--text-h3);
+  }
+
+  .footer__cta {
+    display: inline-block;
+    margin-top: var(--space-6);
+    font-family: var(--font-shout);
+    text-transform: uppercase;
+    font-size: clamp(1.5rem, 1rem + 2.4vw, 2.6rem);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--void-0);
+    background: var(--acid);
+    border-radius: var(--radius-pill);
+    padding: 0.65em 1.1em;
+    transition:
+      transform var(--dur-2) var(--ease-out),
+      box-shadow var(--dur-2) var(--ease-out);
+  }
+
+  .footer__cta:hover,
+  .footer__cta:focus-visible {
+    transform: rotate(-1.2deg) scale(1.03);
+    box-shadow: 0 14px 40px rgb(205 232 74 / 0.25);
+  }
+
+  .footer__mailline {
+    margin-top: var(--space-3);
+  }
+
+  .footer__sig {
+    margin-top: var(--space-8);
+  }
+
+  .footer__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--void-2);
+  }
+
+  .footer__meta-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.06em;
+  }
+</style>

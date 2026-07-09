@@ -1,0 +1,143 @@
+---
+/**
+ * Nav — the floating pill (atul-style): links either side of a small
+ * spark glyph that goes home. Translucent dark, sticky, works over every
+ * surface. No wordmark — the signature lives in the footer.
+ *
+ * Resume behaviour: if public/resume.pdf exists, the nav link downloads
+ * it directly; otherwise it goes to the draft resume page.
+ */
+import fs from 'node:fs';
+
+const hasPdf = fs.existsSync('public/resume.pdf');
+
+const left = [
+  { href: '/#work', label: 'work' },
+  { href: '/about', label: 'about' },
+];
+const right = [
+  { href: '/playground', label: 'playground' },
+  {
+    href: hasPdf ? '/resume.pdf' : '/resume',
+    label: 'resume',
+    download: hasPdf ? 'Debashmita-Ojha-Resume.pdf' : undefined,
+  },
+];
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) =>
+  !href.startsWith('/#') && (path === href || path.startsWith(href + '/'));
+---
+
+<div class="nav-shell">
+  <nav class="nav" aria-label="Main">
+    {
+      left.map((l) => (
+        <a
+          href={l.href}
+          class:list={['nav__link', { 'is-active': isActive(l.href) }]}
+          aria-current={isActive(l.href) ? 'page' : undefined}
+        >
+          {l.label}
+        </a>
+      ))
+    }
+    <a href="/" class="nav__glyph" aria-label="Home">✳</a>
+    {
+      right.map((l) => (
+        <a
+          href={l.href}
+          download={l.download}
+          class:list={['nav__link', { 'is-active': isActive(l.href) }]}
+          aria-current={isActive(l.href) ? 'page' : undefined}
+        >
+          {l.label}
+        </a>
+      ))
+    }
+  </nav>
+</div>
+
+<style>
+  .nav-shell {
+    position: sticky;
+    top: var(--space-4);
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    padding-inline: var(--gutter);
+    margin-bottom: calc(-1 * var(--space-6));
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(var(--space-4), 3.5vw, var(--space-7));
+    background: rgb(16 16 19 / 0.72);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgb(244 239 228 / 0.1);
+    border-radius: var(--radius-pill);
+    padding: 0.8rem clamp(1.2rem, 3vw, 2.4rem);
+    box-shadow: 0 8px 30px rgb(0 0 0 / 0.35);
+    /* Safety net: on any viewport too narrow for all five items, the pill
+       scrolls internally instead of overflowing the page horizontally. */
+    max-width: calc(100vw - 2 * var(--gutter));
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav__link {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.14em;
+    color: #cfc9ba;
+    background-image: linear-gradient(var(--acid), var(--acid));
+    background-repeat: no-repeat;
+    background-size: 0% 1.5px;
+    background-position: 50% 100%;
+    padding-bottom: 0.3em;
+    transition:
+      background-size var(--dur-2) var(--ease-out),
+      color var(--dur-1) var(--ease-out);
+  }
+
+  .nav__link:hover,
+  .nav__link:focus-visible {
+    color: #f4efe4;
+    background-size: 100% 1.5px;
+  }
+
+  .nav__link.is-active {
+    color: #f4efe4;
+    background-size: 100% 1.5px;
+  }
+
+  .nav__glyph {
+    font-size: 1.35rem;
+    line-height: 1;
+    color: #f4efe4;
+    transition: transform var(--dur-2) var(--ease-out);
+  }
+
+  .nav__glyph:hover,
+  .nav__glyph:focus-visible {
+    transform: rotate(90deg) scale(1.15);
+  }
+
+  @media (max-width: 560px) {
+    .nav {
+      gap: var(--space-3);
+      padding: 0.65rem 1rem;
+    }
+
+    .nav__link {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+    }
+  }
+</style>
