@@ -9,6 +9,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/dm-sans": "^5.2.8",
     "@fontsource/anton": "^5.2.7",
     "@fontsource/dm-mono": "^5.2.7",

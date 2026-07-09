@@ -172,6 +172,11 @@ const heroIsVideo = d.heroMedia && /\.(mp4|webm)$/i.test(d.heroMedia);
   .cs__media img {
     width: 100%;
     max-height: 34rem;
+    /* Reserves the box before the video's own metadata loads, so layout
+       doesn't jump once it does — matches the walkthrough's own 384:832
+       portrait recording. Case studies with a different-shaped heroMedia
+       can override this in their own frontmatter-driven markup later. */
+    aspect-ratio: 384 / 832;
     object-fit: contain;
     border-radius: var(--radius-2);
     border: 1px solid var(--line-soft);

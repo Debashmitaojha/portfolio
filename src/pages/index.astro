@@ -42,6 +42,8 @@ const caseStudies = (await getCollection('case-studies')).sort(
           <img
             src="/brand/intro-art.png"
             alt="A hand-drawn self portrait placeholder — currently the Dojha calligraphy"
+            width="635"
+            height="193"
             loading="lazy"
           />
           <figcaption class="label">[ {site.intro.artNote} ]</figcaption>
@@ -49,7 +51,7 @@ const caseStudies = (await getCollection('case-studies')).sort(
       </div>
 
       <div class="section-rule">
-        <p class="aside work__aside">{site.workSection.aside}</p>
+        <h2 class="aside work__aside">{site.workSection.aside}</h2>
         <span class="label">01. work</span>
       </div>
       <div class="work__grid">
@@ -80,7 +82,7 @@ const caseStudies = (await getCollection('case-studies')).sort(
         <p class="aside">{site.hats.aside}</p>
         <span class="label">02. the person</span>
       </div>
-      <p class="shout shout--2 hats__shout">{site.hats.shout}</p>
+      <h2 class="shout shout--2 hats__shout">{site.hats.shout}</h2>
       <div class="hats__stickers">
         {
           site.hats.stickers.map((s, i) => (

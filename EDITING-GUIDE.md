@@ -50,7 +50,10 @@ image: "/brand/my-image.png"   # optional
 That's it — a new card appears.
 
 ## Swap images
-- **Intro drawing** (home): replace `public/brand/intro-art.png`
+- **Intro drawing** (home): replace `public/brand/intro-art.png`. If your
+  new image has very different proportions, also update the `width`/
+  `height` attributes on that `<img>` in `src/pages/index.astro` (keeps the
+  page from jumping while the image loads — cosmetic only, safe to skip).
 - **About photo**: add `public/brand/portrait.jpg`
 - **Signature**: replace `public/brand/dojha-mark.jpeg` with a new scan,
   then run `node scripts/make-signature.mjs` (navy) and
