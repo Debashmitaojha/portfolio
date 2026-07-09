@@ -4,6 +4,7 @@ kicker: "Scan and Go · Retail · 0→1 build"
 oneLiner: "Scan products while you shop, pay in-app, verify at the exit. Built end-to-end in React Native with Firebase and Razorpay — to experience how the flow behaves before it ships, not just how it looks in mockups."
 why: "proof I ship — a working app you can watch running, not a stack of mockups."
 cover: "/media/retail-checkout-cover.jpg"
+demo: "/demo"
 order: 2
 featured: true
 role: "Solo — product, design, AI-assisted build"

@@ -66,6 +66,15 @@ That's it — a new card appears.
 - Draft page text: edit `src/pages/resume.astro` (the `projects` and
   `skills` lists at the top — plain lists).
 
+## Live demo button ("Try the live demo")
+The retail-checkout case study links to `/demo` — a browser reconstruction
+of the Scan and Go flow (scan, cart, coupons, mock OTP login, mock payment,
+QR exit-verification) built in `src/pages/demo.astro` +
+`src/scripts/checkout-demo.ts`. It's self-contained: no real backend,
+gateway, or SMS is called, so it costs nothing to host and nothing can break
+from an expired API key. Any case study can get this button — just add
+`demo: "/some-path"` to its frontmatter.
+
 ## Case study "live screen" (the media beside the title)
 Add to any case study's frontmatter:
 ```yaml
