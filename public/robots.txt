@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://debashmitaojha.netlify.app/sitemap-index.xml
+Sitemap: https://portfolio-debashmitaojhas-projects.vercel.app/sitemap-index.xml

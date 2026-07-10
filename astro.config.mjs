@@ -2,8 +2,8 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Site URL is a placeholder until the real domain/host is chosen (Phase 5).
+// Update this if a custom domain is connected later.
 export default defineConfig({
-  site: 'https://debashmitaojha.netlify.app',
+  site: 'https://portfolio-debashmitaojhas-projects.vercel.app',
   integrations: [sitemap()],
 });
