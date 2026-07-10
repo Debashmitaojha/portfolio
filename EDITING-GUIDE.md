@@ -103,7 +103,18 @@ shows your gif instead of the emoji. Clear it back to `""` for the emoji.
 Create `src/content/blog/` following the playground pattern — the content
 system already supports new collections; ask when you want the pages wired.
 
-## Deploy
-The site is a static build (`npm run build` → `dist/`). Netlify/Vercel free
-tier: connect the repo, set build command `npm run build`, publish dir
-`dist`. Nothing else to configure.
+## Publishing changes (getting your edits onto the live site)
+The live site is on Vercel: **https://portfolio-debashmitaojhas-projects.vercel.app**
+
+While editing, run `npm run dev` and open http://localhost:4321 — the page
+updates the moment you save, so you preview every change on your own machine
+before anyone else sees it.
+
+To push those edits to the live site:
+- **Once the GitHub repo is connected on Vercel** (Project → Settings → Git),
+  every `git push` publishes automatically in about a minute. Connect it once
+  and you never think about deploys again — this is the goal.
+- **Until then**, run `vercel --prod` from the project folder to publish.
+
+The site is a plain static build (`npm run build` → `dist/`), so any static
+host works if you ever move off Vercel.
